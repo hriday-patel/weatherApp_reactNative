@@ -1,21 +1,15 @@
 import Feather from "@expo/vector-icons/Feather";
-import { FlatList, StatusBar, Text, View } from "react-native";
+import { FlatList, ImageBackground, StatusBar, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import ListItem from "./Components/ListItem";
 
-const Item = (props: propy) => {
-  const { dt_txt, condition, min, max } = props;
+const renderItem = ({item}: {item: ItemProps}) => {
   return (
-    <View className="py-6 pl-0 pr-3 flex-row flex-1 justify-around items-center gap-4 mx-4 my-4 border-2 rounded-xl bg-[#B0CE88]/75">
-      <Feather name="sun" color="black" size={36} />
-      <Text>{dt_txt}</Text>
-      <Text className="text-neutral-700 font-semibold text-2xl">{condition}</Text>
-      <Text className="text-black font-bold text-2xl">{min}</Text>
-      <Text className="text-black font-bold text-2xl">{max}</Text>
-    </View>
-  );
+    <ListItem dt_txt={item.dt} min={item.main.temp_min} max={item.main.temp_max} condition={item.weather[0].main} />
+  )
 };
 
-type propy = {
+export type propy = {
   dt_txt: string;
   condition: string;
   min: number;
@@ -79,19 +73,14 @@ const DATA: ItemProps[] = [
 ];
 
 const CurrentWeather = () => {
-  const renderItem = ({ item }: { item: ItemProps }) => (
-    <Item
-      condition={item.weather[0].main}
-      min={item.main.temp_min}
-      max={item.main.temp_max}
-      dt_txt={item.dt}
-    />
-  );
   return (
     <SafeAreaView
-      className={`flex-1 bg-[#FFFD8F] my-[${StatusBar.currentHeight || 0}]`}
+      className={`flex-1 my-[${StatusBar.currentHeight || 0}]`}
     >
-      <StatusBar barStyle="default" />
+      <ImageBackground
+        source={require("../assets/images/bgImage.jpg")}
+        className="flex-1"
+      >
       <Text className="text-black font-bold text-3xl font-mono text-center tracking-widest">
         Upcoming Weather
       </Text>
@@ -101,6 +90,7 @@ const CurrentWeather = () => {
         keyExtractor={(item) => item.dt}
         ListEmptyComponent={<Empty />}
       />
+      </ImageBackground>
     </SafeAreaView>
   );
 };
