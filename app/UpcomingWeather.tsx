@@ -1,12 +1,16 @@
-import Feather from "@expo/vector-icons/Feather";
 import { FlatList, ImageBackground, StatusBar, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ListItem from "./Components/ListItem";
 
-const renderItem = ({item}: {item: ItemProps}) => {
+const renderItem = ({ item }: { item: ItemProps }) => {
   return (
-    <ListItem dt_txt={item.dt} min={item.main.temp_min} max={item.main.temp_max} condition={item.weather[0].main} />
-  )
+    <ListItem
+      dt_txt={item.dt}
+      min={item.main.temp_min}
+      max={item.main.temp_max}
+      condition={item.weather[0].main}
+    />
+  );
 };
 
 export type propy = {
@@ -72,26 +76,24 @@ const DATA: ItemProps[] = [
   },
 ];
 
-const CurrentWeather = () => {
+const UpcomingWeather = () => {
   return (
-    <SafeAreaView
-      className={`flex-1 my-[${StatusBar.currentHeight || 0}]`}
+    <ImageBackground
+      source={require("../assets/images/bgImage.jpg")}
+      className={`flex-1 mt-[${StatusBar.currentHeight || 0}]`}
     >
-      <ImageBackground
-        source={require("../assets/images/bgImage.jpg")}
-        className="flex-1"
-      >
-      <Text className="text-black font-bold text-3xl font-mono text-center tracking-widest">
-        Upcoming Weather
-      </Text>
-      <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.dt}
-        ListEmptyComponent={<Empty />}
-      />
-      </ImageBackground>
-    </SafeAreaView>
+      <SafeAreaView className="flex-1">
+        <Text className="text-black font-bold text-3xl font-mono text-center tracking-widest">
+          Upcoming Weather
+        </Text>
+        <FlatList
+          data={DATA}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.dt}
+          ListEmptyComponent={<Empty />}
+        />
+      </SafeAreaView>
+    </ImageBackground>
   );
 };
-export default CurrentWeather;
+export default UpcomingWeather;

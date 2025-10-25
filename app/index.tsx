@@ -1,13 +1,38 @@
-import Feather from "@expo/vector-icons/Feather";
-import { Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Weather from "./Weather";
-import CurrentWeather from "./CurrentWeather";
+import UpcomingWeather from "./UpcomingWeather";
+import City from "./City";
+import Feather from "@expo/vector-icons/Feather";
+import { SafeAreaView } from "react-native-safe-area-context";
+import * as Location from 'expo-location';
 
 export default function Index() {
+
+
+
+  const Tab = createBottomTabNavigator();
   return (
-    <View className="flex-1">
-      <CurrentWeather />
-    </View>
+      <Tab.Navigator screenOptions={{
+        tabBarActiveTintColor: 'tomato',
+        tabBarInactiveTintColor: 'grey',
+        headerShown: false
+      }}>
+          <Tab.Screen name="Weather" component={Weather} options={{
+            tabBarIcon({focused}) {
+                return <Feather name="droplet" size={24} color={focused ? 'tomato': 'black'} />
+            },
+          }}/>
+          <Tab.Screen name="Upcoming" component={UpcomingWeather} options={{
+            tabBarIcon({focused}) {
+                return <Feather name="clock" size={24} color={focused ? 'tomato': 'black'} />
+            },
+          }}/>
+          <Tab.Screen name="City" component={City} options={{
+            tabBarIcon({focused}) {
+                return <Feather name="home" size={24} color={focused ? 'tomato': 'black'} />
+            },
+          }}/>
+      </Tab.Navigator>
   );
 }
+                              
