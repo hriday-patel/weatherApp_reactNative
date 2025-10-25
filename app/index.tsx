@@ -11,7 +11,7 @@ import Weather from "./Weather";
 const Tab = createBottomTabNavigator();
 
 export default function Index() {
-  const [weatherData, setWeatherData] = useState(null);
+  const [weatherData, setWeatherData] = useState<object | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -64,6 +64,7 @@ export default function Index() {
     return (
       <View className="flex-1 bg-white justify-center items-center">
         <ActivityIndicator color={"purple"} size={"large"} />
+        <Text className="mt-4 text-gray-600">Loading weather data...</Text>
       </View>
     );
   }
@@ -76,10 +77,6 @@ export default function Index() {
     );
   }
 
-  if (weatherData) {
-    console.log(weatherData);
-  }
-
   return (
     <Tab.Navigator
       screenOptions={{
@@ -90,7 +87,6 @@ export default function Index() {
     >
       <Tab.Screen
         name="Weather"
-        component={Weather}
         options={{
           tabBarIcon: ({ focused }) => (
             <Feather
@@ -100,10 +96,11 @@ export default function Index() {
             />
           ),
         }}
-      />
+      >
+        {() => <Weather weatherData={weatherData} />}
+      </Tab.Screen>
       <Tab.Screen
         name="Upcoming"
-        component={UpcomingWeather}
         options={{
           tabBarIcon: ({ focused }) => (
             <Feather
@@ -113,10 +110,11 @@ export default function Index() {
             />
           ),
         }}
-      />
+      >
+        {() => <UpcomingWeather weatherData={weatherData} />}
+      </Tab.Screen>
       <Tab.Screen
         name="City"
-        component={City}
         options={{
           tabBarIcon: ({ focused }) => (
             <Feather
@@ -126,7 +124,9 @@ export default function Index() {
             />
           ),
         }}
-      />
+      >
+        {() => <City weatherData={weatherData} />}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }

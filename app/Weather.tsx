@@ -1,7 +1,7 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text, View } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
-const Weather = () => {
+const Weather = ({weatherData}: {weatherData: object | null}) => {
   return (
     <SafeAreaView className="flex-1 bg-rose-400">
       <View className="flex-1 items-center justify-center">

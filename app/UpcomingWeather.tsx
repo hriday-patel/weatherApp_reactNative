@@ -76,7 +76,7 @@ const DATA: ItemProps[] = [
   },
 ];
 
-const UpcomingWeather = () => {
+const UpcomingWeather = ({weatherData}: {weatherData: object | null}) => {
   return (
     <ImageBackground
       source={require("../assets/images/bgImage.jpg")}

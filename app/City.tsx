@@ -1,7 +1,7 @@
 import { ImageBackground, StatusBar, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FeatherIcon from "./Components/FeatherIcon";
-const City = () => {
+const City = ({weatherData}: {weatherData: object | null}) => {
   return (
     
       <ImageBackground
