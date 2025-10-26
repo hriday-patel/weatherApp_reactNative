@@ -1,20 +1,42 @@
+import Feather from "@expo/vector-icons/Feather";
 import { Text, View } from "react-native";
 import { propy } from "../UpcomingWeather";
-import Feather from "@expo/vector-icons/Feather";
-
+import { getDayName, getFormattedTime } from "../utils/dateFormatter";
+import { weatherType } from "../utils/weatherType";
 
 const ListItem = (props: propy) => {
   const { dt_txt, max, min, condition } = props;
+
+  const day = getDayName(dt_txt);
+  const time = getFormattedTime(dt_txt);
+  const bg = weatherType[condition].backgroundColor;
+  const icon = weatherType[condition].icon as keyof typeof Feather.glyphMap;
+
   return (
-    <View className="py-6 pl-0 pr-3 flex-row flex-1 justify-around items-center gap-4 mx-4 my-4 border-2 border-neutral-500/70 rounded-xl bg-[#f2f2b0b5]">
-      <Feather name="sun" color="black" size={36} />
-      <Text>{dt_txt}</Text>
-      <Text className="text-neutral-700 font-semibold text-2xl">
-        {condition}
-      </Text>
-      <Text className="text-black font-bold text-2xl">{min}</Text>
-      <Text className="text-black font-bold text-2xl">{max}</Text>
+    <View
+      className="py-4 px-4 flex-row justify-between items-center mx-4 my-2 border border-white/30 rounded-2xl"
+      style={{ backgroundColor: bg }}
+    >
+      <Feather name={icon} color="white" size={40} />
+
+      <View className="flex-col items-start flex-1 ml-4">
+        <Text className="text-white font-bold text-lg">{day}</Text>
+        <Text className="text-white/80 text-sm">{time}</Text>
+      </View>
+
+      <View className="flex-col items-center">
+        <Text className="text-white font-semibold text-base mb-1">
+          {condition}
+        </Text>
+        <View className="flex-row gap-2">
+          <Text className="text-white/90 text-sm">L: {Math.round(min)}°</Text>
+          <Text className="text-white font-bold text-base">
+            H: {Math.round(max)}°
+          </Text>
+        </View>
+      </View>
     </View>
   );
 };
+
 export default ListItem;

@@ -14,7 +14,7 @@ const FeatherIcon = (props: texty) => {
   return (
     <>
       <Feather name={iconName} color={color} size={size} />
-      <Text className="text-black font-bold text-2xl">{text}</Text>
+      <Text className="text-black font-bold text-lg">{text}</Text>
     </>
   );
 };
